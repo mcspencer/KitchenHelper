@@ -1,0 +1,74 @@
+﻿@model KitchenHelper.Models.Recipe
+
+@{
+    ViewBag.Title = "Edit " + Model.Name;
+}
+
+<h2>Edit @Model.Name</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Recipe</legend>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.DateAdded)
+        @Html.HiddenFor(model => model.LastViewed)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Ingredients)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Ingredients)
+            @Html.ValidationMessageFor(model => model.Ingredients)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Method)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Method)
+            @Html.ValidationMessageFor(model => model.Method)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Notes)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Notes)
+            @Html.ValidationMessageFor(model => model.Notes)
+        </div>
+
+        <div class="editor-label">
+            Preparation time:
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EstimatedPrepTime)
+            @Html.ValidationMessageFor(model => model.EstimatedPrepTime)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back", "Details", new { id = Model.ID })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

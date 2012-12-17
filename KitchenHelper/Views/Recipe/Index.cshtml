@@ -1,0 +1,75 @@
+﻿@model IEnumerable<KitchenHelper.Models.Recipe>
+
+@{
+    ViewBag.Title = "Recipes";
+}
+
+<div id="subheader">
+    <h2>Recipe Index</h2>
+    <div id="search">
+        @using (Html.BeginForm("Index","Recipe"))
+        {
+            <label for="searchQuery">Search:</label>
+            <input type="text" name="searchQuery" />
+            <button type="submit">Go</button>
+        }
+    </div>
+</div>
+
+<p class="clear actions">
+    @Html.ActionLink("Create New", "Create") |
+    @Html.ActionLink("Import", "Import") |
+    @Html.ActionLink("Export All", "ExportAll")
+</p>
+
+@if (!string.IsNullOrEmpty(ViewBag.SearchString))
+{
+    <p id="previousSearchQuery">
+        Displaying results for "@ViewBag.SearchString".  (@Html.ActionLink("clear","Index"))
+    </p>
+}
+
+<table>
+    <tr>
+        <th class="recipe-name">
+            @if (ViewBag.SortString == "Name")
+            {
+                @Html.ActionLink("Recipe", "Index", new { sort = "Name Desc", searchQuery=ViewBag.SearchString });
+            }
+            else
+            {
+                @Html.ActionLink("Recipe","Index",new { sort = "Name", searchQuery=ViewBag.SearchString});
+            }
+        </th>
+        <th class="recipe-viewed">
+            @if (ViewBag.SortString == "Viewed Desc")
+            {
+                @Html.ActionLink("Last Viewed", "Index", new { sort = "Viewed", searchQuery=ViewBag.SearchString });
+            }
+            else
+            {
+                @Html.ActionLink("Last Viewed", "Index", new { sort = "Viewed Desc", searchQuery=ViewBag.SearchString });
+            }            
+        </th>
+        <th class="recipe-added">Added</th>
+        @*<th></th>*@
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="recipe-name">
+            @Html.ActionLink(item.Name, "Details", new { id=item.ID })
+        </td>
+        <td class="recipe-viewed">@Html.FriendlyDate(item.LastViewed)</td>
+        <td class="recipe-added">@Html.DisplayFor(modelItem => item.DateAdded)</td>
+        @*
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+        *@
+    </tr>
+}
+
+</table>

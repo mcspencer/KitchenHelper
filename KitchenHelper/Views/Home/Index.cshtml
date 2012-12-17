@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Kitchen Helper";
+}
+
+<h2>Welcome to Kitchen Helper!</h2>
+
+<h3>Recently Viewed Recipes:</h3>
+
+<ol>
+@foreach (KitchenHelper.Models.Recipe recipe in ViewBag.Top10)
+{
+    <li>@Html.ActionLink(recipe.Name,"Details","Recipe",new {id=recipe.ID},null)</li>
+}
+</ol>

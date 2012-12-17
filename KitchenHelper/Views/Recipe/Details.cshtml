@@ -1,0 +1,104 @@
+﻿@model KitchenHelper.Models.Recipe
+
+@{
+    ViewBag.Title = Model.Name;
+    bool hasAtLeastOneField = false;
+}
+
+<p class="actions">
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ID }) |
+    @Html.ActionLink("Export","Export", new { id=Model.ID }) |
+    @Html.ActionLink("Delete", "Delete", new { id=Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+<h2>@Model.Name</h2>
+<span id="dateadded">(Added: @Html.DisplayFor(m => m.DateAdded))</span>
+
+<fieldset>
+    <legend>Recipe</legend>
+
+    @if (!string.IsNullOrEmpty(Model.Ingredients))
+    {
+        hasAtLeastOneField = true;
+    <div class="display-box">
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Ingredients)
+        </div>
+        <div class="display-field">
+            @{
+                string[] ingredients = Model.Ingredients.Split(new string[]{System.Environment.NewLine}, StringSplitOptions.None);
+            }
+            <ul>
+            @foreach (string ingredient in ingredients)
+            {
+                if (!string.IsNullOrEmpty(ingredient))
+                {
+                    <li>@ingredient</li>
+                }
+                else
+                {
+                    <li class="item-empty">&nbsp;</li>
+                }
+            }
+            </ul>
+        </div>
+    </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Method))
+    {
+        hasAtLeastOneField = true;
+    <div class="display-box">
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Method)
+        </div>
+        <div class="display-field">
+            @{
+            string[] methods = Model.Method.Split(new string[]{System.Environment.NewLine}, StringSplitOptions.None);
+            }
+            @foreach (string methodStep in methods)
+            {
+                if (!string.IsNullOrEmpty(methodStep))
+                {
+                    <p>@methodStep</p>
+                }
+            }
+            
+        </div>
+    </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.Notes))
+    {
+        hasAtLeastOneField = true;
+    <div class="display-box">
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Notes)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Notes)
+        </div>
+    </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.EstimatedPrepTime))
+    {
+        hasAtLeastOneField = true;
+    <div class="display-box">
+        <span class="display-label">
+            Preparation Time:
+        </span>
+        <span class="display-field">
+            @Html.DisplayFor(model => model.EstimatedPrepTime)
+        </span>
+    </div>
+    }
+
+    @if (!hasAtLeastOneField)
+    {
+        @:Nothing to see here, folks!
+    }
+
+</fieldset>
+

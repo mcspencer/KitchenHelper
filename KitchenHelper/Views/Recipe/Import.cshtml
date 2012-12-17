@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Import";
+}
+
+<h2>Import</h2>
+
+@using(Html.BeginForm())
+{
+    @Html.TextArea("importxml")
+    <input type="submit" value="Save"/>
+}
+
+<div class="divider">
+    - OR -
+</div>
+
+@using (Html.BeginForm("ImportFile", "Recipe", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" value="Upload File" name="importfile"/>
+    <input type="submit" value="Import"/>
+}
